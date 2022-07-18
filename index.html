@@ -1,0 +1,68 @@
+<html>
+<head>
+<script src="http://skulpt.org/js/skulpt.min.js" type="text/javascript"></script>
+<script src="http://skulpt.org/js/skulpt-stdlib.js" type="text/javascript"></script>
+</head>
+<body onload='runit()'>
+<script type="text/javascript">
+function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+    return Sk.builtinFiles["files"][x];
+}
+function runit() { 
+   var prog = document.getElementById("py").value;
+   Sk.configure({read:builtinRead}); 
+   (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+   var myPromise = Sk.misceval.asyncToPromise(function() {
+       return Sk.importMainWithBody("<stdin>", false, prog, true);
+   });
+} 
+</script>
+<form>
+<textarea id="py">
+############### main.py ###############
+import turtle
+t = turtle.Turtle()
+
+screen = turtle.Screen()
+size = 200
+center = (-10, -20)
+line_width = size * 0.0866
+circle_radius = size * 0.7
+def arc(x):    
+    t.fillcolor("black")
+    t.begin_fill()
+    t.circle(x, 180)        
+    t.left(90)
+    t.forward(line_width)
+    t.left(90)
+    t.circle(-x * 0.9, 180)
+    t.end_fill()
+for color in ["black", "white"]:
+    t.penup()
+    t.goto(center)
+    t.forward(circle_radius)    
+    t.left(90)
+    t.pendown()
+    t.fillcolor(color)
+    t.begin_fill()
+    t.circle(circle_radius)
+    t.end_fill()
+    circle_radius = circle_radius - line_width
+    t.right(90)        
+t.right(30)
+for i in range(3):    
+    t.penup()
+    t.goto(center)    
+    t.forward(size)
+    t.left(120)
+    t.pendown()
+    arc(size * 0.866)
+    t.right(60)
+#######################################
+</textarea>
+</form>
+<div id="mycanvas"></div>
+</body>
+</html>
