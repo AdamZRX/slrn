@@ -1,0 +1,29 @@
+<html><head><style>
+img, #py {display: none;}
+#mycanvas {border: 1px solid black;}</style>
+<script src="skulpt.min.js"></script> 
+<script src="skulpt-stdlib.js"></script>
+</head><body onload='runit()'>
+<script>
+function builtinRead(a){if(void 0===Sk.builtinFiles||void 0===Sk.builtinFiles.files[a])throw"File not found: '"+a+"'";return Sk.builtinFiles.files[a]}function runit(){var a=document.getElementById("py").value;Sk.configure({read:builtinRead});(Sk.TurtleGraphics||(Sk.TurtleGraphics={})).target="mycanvas";Sk.misceval.asyncToPromise(function(){return Sk.importMainWithBody("<stdin>",!1,a,!0)})};
+</script> 
+<form> 
+<textarea id="py">
+############### main.py ###############
+from turtle import *
+speed(5)
+color('cyan')
+pensize(6)
+goto(-10, 0)
+for i in range(8):
+    left(45)
+    for i in range(8):
+        forward(50)
+        left(45)
+hideturtle()
+#######################################
+</textarea>
+</form> 
+<div id="mycanvas"></div> 
+</body> 
+</html>
