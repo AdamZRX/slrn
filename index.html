@@ -1,6 +1,6 @@
 <html><head><style>
 img, #py {display: none;}
-#mycanvas {border: 1px solid black;}</style>
+</style>
 <script src="skulpt.min.js"></script> 
 <script src="skulpt-stdlib.js"></script>
 </head><body onload='runit()'>
@@ -11,6 +11,9 @@ function builtinRead(a){if(void 0===Sk.builtinFiles||void 0===Sk.builtinFiles.fi
 <textarea id="py">
 ############### main.py ###############
 from turtle import *
+penup()
+goto(-75, 75)
+pendown()
 speed(5)
 color('cyan')
 pensize(6)
