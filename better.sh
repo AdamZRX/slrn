@@ -102,20 +102,4 @@ else
     fi
 fi
 
-# This may happen earlier than the time limit when the ulimit's 10MB limit reaches and..
-# So, the process is stopped.
-# Next the following part checks the filesize and if
-#   it is bigger than 100KB, it will only take the
-#   first 2048 chars and because most probably
-#   the code was infinite loop..
-#   it will remove and replace the error with "Timed Out"
-maxsize=100000 # 100KB
-filesize=$(stat -c%s /usercode/logfile.txt)
-if (( filesize > maxsize )); then
-    head -c 2048 /usercode/logfile.txt > /usercode/small_logfile.txt
-    rm /usercode/logfile.txt
-    mv /usercode/small_logfile.txt /usercode/logfile.txt
-    echo -e "\nExecution Timed Out!" > /usercode/errors
-fi
-
 mv /usercode/logfile.txt /usercode/completed
